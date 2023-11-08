@@ -27,20 +27,20 @@ public class Main {
         System.out.println();
     }
     
-    // // selection sort
-    // static int[] selectionSort(int[] anArray) {
+    // selection sort
+    static int[] selectionSort(int[] anArray) {
 
-    //     for(int i=0; i<anArray.length-1; i++) {
-    //         for(int j=i+1; j<anArray.length; j++) {
-    //             if(anArray[i] > anArray[j]) {
-    //                 int temp = anArray[j];
-    //                 anArray[j] = anArray[i];
-    //                 anArray[i] = temp;
-    //             }
-    //         }
-    //     }
-    //     return anArray;
-    // }
+        for(int i=0; i<anArray.length-1; i++) {
+            for(int j=i+1; j<anArray.length; j++) {
+                if(anArray[i] > anArray[j]) {
+                    int temp = anArray[j];
+                    anArray[j] = anArray[i];
+                    anArray[i] = temp;
+                }
+            }
+        }
+        return anArray;
+    }
 
     // bubble sort
     static int[] bubbleSort(int[] anArray) {
@@ -62,20 +62,20 @@ public class Main {
         return anArray;
     }
 
-    // // insertion sort
-    // static int[] insertionSort(int[] anArray) {
+    // insertion sort
+    static int[] insertionSort(int[] anArray) {
 
-    //     for(int i=1; i<anArray.length; i++) {
-    //         int temp = anArray[i];
-    //         int nextPos = i-1;
-    //         while(nextPos >= 0 && anArray[nextPos] > temp) {
-    //             anArray[nextPos+1] = anArray[nextPos];
-    //             nextPos--;
-    //         }
-    //         anArray[nextPos+1] = temp;
-    //     }
-    //     return anArray;
-    // }
+        for(int i=1; i<anArray.length; i++) {
+            int temp = anArray[i];
+            int nextPos = i-1;
+            while(nextPos >= 0 && anArray[nextPos] > temp) {
+                anArray[nextPos+1] = anArray[nextPos];
+                nextPos--;
+            }
+            anArray[nextPos+1] = temp;
+        }
+        return anArray;
+    }
 
     // mean method
     static double mean(int[] anArray) {
@@ -100,20 +100,35 @@ public class Main {
     }
 
     // modus method
-    static int modus(int[] anArray) {
-        int num = 0;
-        int count = 0;
-        int mode = 0;
+    static String modus(int[] anArray) {
+        Map<Integer, Integer> arrmod = new HashMap<>();
+        int max = 0;
+        String mode = "";
         for(int i=0; i<anArray.length; i++) {
-            for(int j=0; j<anArray.length; j++) {
-                if(anArray[j] == anArray[i] && j!=i) {
-                    num++;
+            if(arrmod.get(anArray[i]) == null) {
+                arrmod.put(anArray[i], 1);
+            }
+            else {
+                int count = arrmod.get(anArray[i]);
+                count++;
+                arrmod.put(anArray[i], count);
+
+                if(count>max) {
+                    max = count;
+                    mode = "" + anArray[i];
                 }
             }
-            if(num>=count) {
-                count = num;
-                mode = anArray[i];
-                num = 0;
+        }
+        int dupe = 0;
+        for (int i : arrmod.values()) {
+            if(i==max) {
+                dupe++;
+                if(dupe>1) {
+                    mode = "Tidak memiliki modus";
+                }
+            }
+            else if(max==0) {
+                mode = "Tidak memiliki modus";
             }
         }
         return mode;
